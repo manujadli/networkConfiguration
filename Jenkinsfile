@@ -38,12 +38,13 @@ pipeline {
             }
         }
 
-        stage('Testing Stage') {
+        stage('Read File') {
             steps {
 				script {
 					try {
-						echo 'Starting Testing Stage'
-						bat "mvn test"	
+						echo 'Starting Reading File'
+						def data = readFile(file: 'zorg.txt')
+						println(data)	
 					}
 					catch (err) {
 						currentBuild.result = 'UNSTABLE'
