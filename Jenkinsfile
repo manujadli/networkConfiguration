@@ -22,7 +22,7 @@ pipeline {
             steps {
 			   script {
 					try {
-						echo "Build Status RESULT: ${env.WORKSPACE}"
+						echo "WorkSpace Location Is : ${env.WORKSPACE}"
 					}
 					catch (err) {
 						currentBuild.result = 'UNSTABLE'
