@@ -43,7 +43,7 @@ pipeline {
 				script {
 					try {
 						echo 'Starting Reading File'
-						def data = readFile(file: 'pom.xml')
+						def data = readFile(file: 'assembly.yml')
 						println(data)	
 					}
 					catch (err) {
