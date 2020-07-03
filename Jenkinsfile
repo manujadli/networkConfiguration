@@ -43,7 +43,7 @@ pipeline {
 				script {
 					try {
 						echo 'Starting Reading File'
-						def data = readFile(file: 'zorg.txt')
+						def data = readFile(file: 'pom.xml')
 						println(data)	
 					}
 					catch (err) {
