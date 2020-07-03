@@ -23,6 +23,8 @@ pipeline {
 			   script {
 					try {
 						echo "WorkSpace Location Is : ${env.WORKSPACE}"
+						def pom_file = readFile "${env.WORKSPACE}/pom.xml"
+						echo "pom_file is : " pom_file
 					}
 					catch (err) {
 						currentBuild.result = 'UNSTABLE'
