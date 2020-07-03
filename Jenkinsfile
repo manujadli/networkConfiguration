@@ -24,7 +24,11 @@ pipeline {
 					try {
 						echo "WorkSpace Location Is : ${env.WORKSPACE}"
 						def pom_file = readFile "${env.WORKSPACE}/pom.xml"
+						def pom_lines = pom_file.readLines()
 						echo "pom_file is : " pom_file
+						for (line in lines) {
+                      			echo "pom_file is : " "$line/version"
+                           }
 					}
 					catch (err) {
 						currentBuild.result = 'UNSTABLE'
