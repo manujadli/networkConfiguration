@@ -17,6 +17,23 @@ pipeline {
 				
             }
         }
+
+        stage('Print WorkSpace Details') {		
+            steps {
+			   script {
+					try {
+						echo "Build Status RESULT: ${env.WORKSPACE}"
+					}
+					catch (err) {
+						currentBuild.result = 'UNSTABLE'
+						clean_failed()
+						throw err
+					}
+				 }
+				
+            }
+        }
+
         stage('Testing Stage') {
             steps {
 				script {
