@@ -44,7 +44,8 @@ pipeline {
 					try {
 						echo 'Starting Reading File'
 						def data = readFile(file: 'assembly.yml')
-						println(data)	
+						println(data)
+
 					}
 					catch (err) {
 						currentBuild.result = 'UNSTABLE'
@@ -59,6 +60,36 @@ pipeline {
 				}							
             }
         }
+
+        stage('Create Json') {
+            steps {
+				script {
+					try {
+						def someMap = [
+              				  'name' : "john",
+              				  'surname' : "doe"
+          					]
+          				 def json = new groovy.json.JsonBuilder()
+          				 json "people": someMap
+          				 def file = new File("$WORKSPACE/people.json")
+          				 file.write(groovy.json.JsonOutput.prettyPrint(json.toString()))
+							
+					}
+					catch (err) {
+						currentBuild.result = 'UNSTABLE'
+						echo 'Inside catch .. caught exception'
+						echo 'Incremental Build has failed!'						
+						echo 'Err: Incremental Build failed with Error: ' + err.getLocalizedMessage()	
+						test_failed()
+						throw new Exception("Testing failed. Something went wrong!")
+						
+					}
+					
+				}							
+            }
+        }
+
+
         stage('Packaging Stage') {
             steps {
 				script {
