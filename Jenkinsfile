@@ -61,31 +61,20 @@ pipeline {
             }
         }
 
-        stage('Create Json') {
+        stage('Fire Curl Command') {		
             steps {
-				script {
+			   script {
 					try {
-						def someMap = [
-              				  'name' : "john",
-              				  'surname' : "doe"
-          					]
-          				 def json = new groovy.json.JsonBuilder()
-          				 json "people": someMap
-          				 def file = new File("$WORKSPACE/people.json")
-          				 file.write(groovy.json.JsonOutput.prettyPrint(json.toString()))
-							
+						bat "curl -k --location --request POST 'https://alm-ishtar-alm.dish-roks-poc-f5ae0bb7881b3b49feaa20ca32bad577-0000.us-south.containers.appdomain.cloud/oauth/token?grant_type=client_credentials' \
+--header 'Authorization: Basic QWRtaW46dGxxR2pCZGJFbGdwcGNGTU85VHRuV2RrU3hFdlNrOURzcmluVTNqaDJyVT0='"
 					}
 					catch (err) {
 						currentBuild.result = 'UNSTABLE'
-						echo 'Inside catch .. caught exception'
-						echo 'Incremental Build has failed!'						
-						echo 'Err: Incremental Build failed with Error: ' + err.getLocalizedMessage()	
-						test_failed()
-						throw new Exception("Testing failed. Something went wrong!")
-						
+						clean_failed()
+						throw err
 					}
-					
-				}							
+				 }
+				
             }
         }
 
