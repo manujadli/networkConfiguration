@@ -89,6 +89,11 @@ pipeline {
 						echo 'Starting Reading File'
 
 						def data = readFile(file: 'assembly.properties')
+						def props = readProperties  file: 'assembly.properties'
+						def Var1= props['name']
+						def Var2= props['action']
+						echo "Var1=${Var1}"
+						echo "Var2=${Var2}"
 
 						println(data)
 
